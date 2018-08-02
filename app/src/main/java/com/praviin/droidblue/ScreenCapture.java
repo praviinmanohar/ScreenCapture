@@ -1,11 +1,16 @@
 package com.praviin.droidblue;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
@@ -16,6 +21,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScreenCapture {
 
@@ -24,6 +31,7 @@ public class ScreenCapture {
     private Context context;
     private int layout;
     private ScrollView scroll; // Even NestedScrollView also work
+
 
     ScreenCapture(Context ctx, ScrollView scrollView,  int ref){
         this.context = ctx;
@@ -61,21 +69,20 @@ public class ScreenCapture {
     //Store Scrollview as PNG Format
     private void StoreImage(Bitmap bitmap) throws IOException {
         //Need to add Permission
-        String filename = "APJ.png"; // You can Change to Any Image Format
+        // You can Change to Any Image Format
         File source = Environment.getExternalStorageDirectory();
-        File Destination = new File(source, filename);
+        File dest = new File(source.getAbsolutePath()+"/DCIM/Camera/APJ.jpg");
 
-        FileOutputStream out = new FileOutputStream(Destination);
+        FileOutputStream out = new FileOutputStream(dest);
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // You can Change to Any Image Format
         out.flush();
         out.close();
         Log.e(TAG,"Image Stored :)");
-        Toast.makeText(context, "Stored @ "+Destination, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Stored @ "+dest, Toast.LENGTH_SHORT).show();
         //It will work in your android device
         //not work in emulator
         //Thanks
 
     }
-
 
 }
